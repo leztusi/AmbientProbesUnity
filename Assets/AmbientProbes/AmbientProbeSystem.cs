@@ -29,12 +29,14 @@ namespace AmbientProbes
             Profiler.BeginSample("Ambient Probes: GetInterpolatedColor");
             ProbeInterpolation data = GetInterpolationData(position);
 
-            if (!data.group) return RenderSettings.ambientSkyColor;
+            //if (!data.group) return RenderSettings.ambientSkyColor;
+            if (!data.group) return Color.white; //don't use the ambient sky color when multiplying to indirect light color. it'll ended up similar to multiplying itself making it more darker.
 
             //If one of the other is null
             if (data.dest == null && data.source != null) return data.source.color * data.source.occlusion;
             if (data.source == null && data.dest != null) return data.dest.color * data.dest.occlusion;
-            if (data.source == null && data.dest == null) return RenderSettings.ambientSkyColor;
+            //if (data.source == null && data.dest == null) return RenderSettings.ambientSkyColor;
+            if (data.source == null && data.dest == null) return Color.white; //don't use the ambient sky color when multiplying to indirect light color. it'll ended up similar to multiplying itself making it more darker.
 
             Color src = data.source.overriden ? data.source.color : data.group.color;
             if (data.source.global) src = RenderSettings.ambientSkyColor;
@@ -44,11 +46,29 @@ namespace AmbientProbes
 
             //Lerp
             Color ambient = Color.Lerp(dst, src, data.dist01);
+            //float occlusion = Mathf.Lerp(data.dest.occlusion, data.source.occlusion, data.dist01);
+
+            Profiler.EndSample();
+
+            //return ambient * occlusion;
+            return ambient;
+        }
+
+        public static float GetInterpolatedOcclusion(Vector3 position)
+        {
+            Profiler.BeginSample("Ambient Probes: GetInterpolatedOcclusion");
+            ProbeInterpolation data = GetInterpolationData(position);
+
+            if (!data.group) return 1;
+
+            //If one of the other is null
+            if (data.dest == null && data.source != null) return data.source.occlusion;
+            if (data.source == null && data.dest != null) return data.dest.occlusion;
             float occlusion = Mathf.Lerp(data.dest.occlusion, data.source.occlusion, data.dist01);
 
             Profiler.EndSample();
 
-            return ambient * occlusion;
+            return occlusion;
         }
 
         public struct ProbeInterpolation

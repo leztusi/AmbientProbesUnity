@@ -146,7 +146,7 @@ namespace AmbientProbes
             }
 
             EditorGUI.BeginChangeCheck();
-            AmbientProbeGroupEditor.selected.color = EditorGUILayout.ColorField("Color", AmbientProbeGroupEditor.selected.color);
+            AmbientProbeGroupEditor.selected.color = EditorGUILayout.ColorField(new GUIContent("Color", "The default ambient color when there's no probe affecting the sampler."), AmbientProbeGroupEditor.selected.color, false, false, true);
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(AmbientProbeGroupEditor.selected);
@@ -173,7 +173,7 @@ namespace AmbientProbes
 
                 selected.global = EditorGUILayout.Toggle("Global", selected.global);
                 if (!selected.global) selected.overriden = EditorGUILayout.Toggle("Override", selected.overriden);
-                if (!selected.global && selected.overriden) selected.color = EditorGUILayout.ColorField("Color", selected.color);
+                if (!selected.global && selected.overriden) selected.color = EditorGUILayout.ColorField(new GUIContent("Color", "Ambient Probe Color"), selected.color, false, false, true);
                 selected.occlusion = EditorGUILayout.Slider("Occlusion", selected.occlusion, 0f, 1f);
 
                 if (EditorGUI.EndChangeCheck())
