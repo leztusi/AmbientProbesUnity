@@ -18,6 +18,13 @@ Limitations
 - Sampling can only happen between 2 probes (source and destination). Doing so for multiple probes requires fetching all nearby probes and sorting them by distance, this requires some form of space partitioning for performance.
 - Probe positions do not move with the probe group
 
+My Version changes
+-------
+-Added HDR colors for both default ambient color and overrided ambient color.
+-Separated and exposed occlusion value to use separately on shader.
+-Added a choice if Global color has to use white color or the scene's ambient color.
+ -Because some characer shaders already has indirect colors applied so adding/multiplying global color may compute the same color that could break the original character colors.
+
 License
 -------
 MIT License (see [LICENSE](LICENSE.md))
