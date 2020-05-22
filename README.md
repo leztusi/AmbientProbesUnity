@@ -22,7 +22,6 @@ My Version changes
 -------
 - Added HDR colors for both default ambient color and overrided ambient color.
 - Separated and exposed occlusion value to use separately on shader.
-- Added a choice if Global color has to use white color or the scene's ambient color. Because some characer shaders already has indirect colors applied so adding/multiplying global color may compute the same color that could break the original character colors.
 
 License
 -------
