@@ -22,6 +22,7 @@ My Version changes
 -------
 - Added HDR colors for both default ambient color and overrided ambient color.
 - Separated and exposed occlusion value to use separately on shader.
+- Changed icon labels with custom icons
 
 License
 -------
